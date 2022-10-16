@@ -1,0 +1,102 @@
+﻿<Window x:Class="Mailbird.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mailbird"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450" Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
+
+
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="EmailsList" MinWidth="250" ItemsSource="{Binding MailDetails}" SelectedItem="{Binding SelectedMailDetails}">
+
+            <!--<ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                                     BorderBrush="Transparent"
+                                     BorderThickness="0"
+                                     Background="{TemplateBinding Background}">
+                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>-->
+            <ListView.ItemTemplate>
+
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding FromAddress}"/>
+                        <TextBlock Margin="0 0 5 0" Text="{Binding Subject}"/>
+                    </StackPanel>
+
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"></GridSplitter>
+
+
+
+
+        <Grid DataContext="{Binding SelectedMailDetails}" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Grid Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="From: " FontWeight="Bold"></TextBlock>
+                    <TextBox Text="{Binding FromFull}" Grid.Column="1"></TextBox>
+                </Grid>
+                <Grid Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="To: " FontWeight="Bold"></TextBlock>
+                    <TextBox Text="{Binding To}" Grid.Column="1"></TextBox>
+                </Grid>
+                <Grid Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Subject: " FontWeight="Bold"></TextBlock>
+                    <TextBox Text="{Binding Subject}" Grid.Column="1"></TextBox>
+                </Grid>
+            </StackPanel>
+
+
+            <ListView ItemsSource="{Binding Attachments}" SelectedItem="{Binding SelectedAttachment}"  Grid.Row="1" DisplayMemberPath="Name"></ListView>
+
+
+
+            <WebBrowser x:Name="HTMLViewer" local:BrowserBehavior.Html="{Binding Body}" Grid.Row="2"></WebBrowser>
+        </Grid>
+
+    </Grid>
+</Window>
